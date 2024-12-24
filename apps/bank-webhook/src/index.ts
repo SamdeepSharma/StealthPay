@@ -4,6 +4,8 @@ const app = express();
 
 app.use(express.json())
 
+console.log("Bank Webhook server running...")
+
 app.post("/hdfcWebhook", async (req, res) => {
     //TODO: Add zod validation here?
     //TODO: HDFC bank should ideally send us a secret so we know this is sent by them
@@ -13,7 +15,7 @@ app.post("/hdfcWebhook", async (req, res) => {
         amount: string
     } = {
         token: req.body.token,
-        userId: req.body.user_identifier,
+        userId: req.body.userId,
         amount: req.body.amount
     };
 
