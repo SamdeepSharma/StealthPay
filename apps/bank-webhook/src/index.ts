@@ -9,6 +9,7 @@ console.log("Bank Webhook server running...")
 app.post("/hdfcWebhook", async (req, res) => {
     //TODO: Add zod validation here?
     //TODO: HDFC bank should ideally send us a secret so we know this is sent by them
+    //TODO: Only perform operation if status of transaction is processing
     const paymentInformation: {
         token: string;
         userId: string;

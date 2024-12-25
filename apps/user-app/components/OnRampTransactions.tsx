@@ -19,13 +19,13 @@ export const OnRampTransactions = ({
             </div>
         </Card>
     }
-    return <Card title="Recent Transactions">
+    return <Card title="Recent Wallet Deposits">
         <div className="pt-2">
             {transactions.map(t =>
                 <div key={Number(t.id)} className="flex justify-between my-1">
                 <div>
                     <div className="text-sm">
-                        Received INR
+                        Deposited INR
                     </div>
                     <div className="text-slate-800 text-xs">
                         status: <span className={`font-medium ${t.status == "Success" ? "text-green-700" : t.status == "Failure" ?"text-red-700" : "text-blue-700"}`}>{t.status}</span>
