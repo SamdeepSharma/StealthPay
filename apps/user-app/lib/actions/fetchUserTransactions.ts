@@ -25,23 +25,30 @@ export async function fetchUserTransactions(): Promise<transaction[] | message>{
           }
      }
 
-     const sent = await prisma.p2pTransfer.findMany({
-          where: {
-               fromUserId: userId
-          },
-     })
+     try {
+          const sent = await prisma.p2pTransfer.findMany({
+               where: {
+                    fromUserId: userId
+               },
+          })
+     
+          const received = await prisma.p2pTransfer.findMany({
+               where: {
+                    toUserId: userId
+               }
+          })
 
-     const received = await prisma.p2pTransfer.findMany({
-          where: {
-               toUserId: userId
-          }
-     })
-
-     const alltxns = [...sent, ...received].sort((a, b) => {
-          const dateA = new Date(a.timestamp)
-          const dateB = new Date(b.timestamp)
-          return Number(dateB) - Number(dateA)
-     })
-
-     return alltxns
+          const alltxns = [...sent, ...received].sort((a, b) => {
+               const dateA = new Date(a.timestamp)
+               const dateB = new Date(b.timestamp)
+               return Number(dateB) - Number(dateA)
+          })
+     
+          return alltxns
+     } catch (error) {
+          console.log(error)
+     } 
+     return {
+          message: "Unable to fetch transactions"
+     }
 }

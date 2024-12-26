@@ -27,13 +27,17 @@ export const Transactions = () => {
      const [data, setData] = useState<TransactionResponse | null>(null)
 
      useEffect(() => {
-          const fetchData = async () => {
-               const response = await fetchUserTransactions()
-               setData(response)
-               const res = await getUserId()
-               setUserId(res)
+          try {
+               const fetchData = async () => {
+                    const response = await fetchUserTransactions()
+                    setData(response)
+                    const res = await getUserId()
+                    setUserId(res)
+               }
+               fetchData()
+          } catch (error) {
+               console.log(error)
           }
-          fetchData()
      }, [])
 
      if (!data || !userId) {
