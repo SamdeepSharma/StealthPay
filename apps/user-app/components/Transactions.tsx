@@ -3,7 +3,6 @@ import { Card } from "@repo/ui/card"
 import { useEffect, useState } from "react"
 import { fetchUserTransactions } from "../lib/actions/fetchUserTransactions"
 import { getUserId } from "../lib/actions/getUserId"
-import { Center } from "@repo/ui/center"
 
 interface Transaction {
      id: number
