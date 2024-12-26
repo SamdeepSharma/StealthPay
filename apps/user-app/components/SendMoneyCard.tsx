@@ -21,7 +21,11 @@ export const SendMoneyCard = () => {
                          }} />
                          <div className="flex justify-center pt-4">
                               <Button onClick={async () => {
-                                   await p2pTransfer(number, amount * 100)
+                                   try {
+                                        await p2pTransfer(number, amount * 100)
+                                   } catch (error) {
+                                        console.log(error)
+                                   }
                               }}>
                                    Send Money
                               </Button>
