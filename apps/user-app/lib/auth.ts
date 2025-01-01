@@ -5,15 +5,16 @@ import { env } from "node:process";
 
 export const authOptions = {
     providers: [
-        CredentialsProvider({
-            name: 'Credentials',
-            credentials: {
-                phone: { label: "Phone number", type: "text", placeholder: "1231231231" },
-                password: { label: "Password", type: "password" }
-            },
-            // TODO: User credentials type from next-auth
-            async authorize(credentials: any) {
-                // Do zod validation, OTP validation her
+      CredentialsProvider({
+          name: 'Credentials',
+          credentials: {
+            phone: { label: "Phone number", type: "text", placeholder: "1231231231" },
+            password: { label: "Password", type: "password", placeholder: "••••••••" }
+          },
+          // TODO: User credentials type from next-auth
+          async authorize(credentials: any): Promise<any> {
+            // Do zod validation, OTP validation her
+            try {
                 const existingUser = await db.user.findFirst({
                     where: {
                         number: credentials.phone
@@ -32,8 +33,13 @@ export const authOptions = {
                     return null;
                 }
 
-                return null
-            },
+            } catch (error) {
+                return {
+                    message: "error"
+                }
+            }
+            return null
+        },
         })
     ],
     secret: env.JWT_SECRET || "secret",
@@ -44,11 +50,11 @@ export const authOptions = {
             return session
         }
     },
-    pages: {
+        pages: {
         signIn: '/sign-in'
     },
     session: {
-        strategy: 'jwt',
         maxAge: 30 * 24 * 60 * 60
-    }
-}
+   },
+  }
+ 
